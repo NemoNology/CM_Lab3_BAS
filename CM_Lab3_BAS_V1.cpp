@@ -6,9 +6,9 @@ using namespace std;
 // Функция для вывода матрицы
 void Show_matr(float** p, unsigned &n, unsigned &m) {
     cout << "\n\n";
-    for (int i = 0; i < n; i++) {
+    for (unsigned i = 0; i < n; i++) {
         cout << "\t" <<"|";
-        for (int j = 0; j < m; j++) {
+        for (unsigned j = 0; j < m; j++) {
             cout << p[i][j] << "\t" <<"|";
         }
         cout << endl;
@@ -22,9 +22,9 @@ void step1(float** p) {
     const unsigned n = 5;
     float* fh[n];
 
-    for (int i = 0; i < n; i++) {
+    for (unsigned i = 0; i < n; i++) {
         if (p[i][i] == 0) {
-            for (int j = i + 1; j < n; j++) {
+            for (unsigned j = i + 1; j < n; j++) {
                 if (p[j][i] != 0) {
                     fh[i] = p[i];
                     p[i] = p[j];
@@ -37,13 +37,37 @@ void step1(float** p) {
     }
 }
 
+// Функция для нахождения множителя строки для 2-ого шага
+void Find_mn(float* s1, float* s2, float &mn) {
+    
+
+}
+
+// 2-ой шаг метода Жаргана-Гаусса
+void step2(float** p, unsigned n, unsigned m) {
+
+    float np_mn;
+    float* mn = &np_mn;
+    for (unsigned i = 0; i < n - 1; i++) {
+        for (unsigned j = 0; j < m - 1; j++) {
+            if (p[i][i] != 1) {
+
+            }
+        }
+    }
+}
+
+
 // Метод Жордана-Гаусса в виде модуля, состоящего из множества функций (Шагов)
 void Method(float** aop, unsigned n, unsigned m) {
     // Вывод изначальной матрицы
     cout << "Изначальная матрица:";
     Show_matr(aop, n, m);
 
+    // Сообственно сам метод:
     step1(aop);
+    step2(aop, n, m);
+
     
     // Вывод итоговой матрицы
     cout << "Итоговая матрица:";
@@ -57,9 +81,8 @@ int main()
 
 // Мой массив
 // ##############################################################
-
     const unsigned n = 5, m = 6;
-    const unsigned* pn = &n;
+    const unsigned * pn = &n, * pm = &m;
 
     float my_mat[n][m] = { {0.42, -0.72, 0.02, -0.28, 0.2, 0.66},
     {-0.67, 0.17, -0.86, 0.88, -0.88, 0.53},
@@ -86,7 +109,7 @@ int main()
 
 
     // Тест 
-    Method(aop, *pn, m);
+    Method(aop, n, m);
 
 
     system("pause"); // Окончание программы
