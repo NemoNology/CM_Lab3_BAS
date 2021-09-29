@@ -4,7 +4,7 @@ using namespace std;
 
 
 // Функция для вывода матрицы
-void Show_matr(float** p, unsigned n, unsigned m) {
+void Show_matr(float** p, unsigned &n, unsigned &m) {
     cout << "\n\n";
     for (int i = 0; i < n; i++) {
         cout << "\t" <<"|";
@@ -17,32 +17,24 @@ void Show_matr(float** p, unsigned n, unsigned m) {
 }
 
 // 1-ый шаг метода Жаргана-Гаусса
-float step1(float** p) {
+void step1(float** p) {
 
-    // создание копии массива, ибо Я не компетентен в данном вопросе
     const unsigned n = 5;
-    float* fp[n];
     float* fh[n];
-    for (int i = 0; i < n; i++) {
-        fp[i] = p[i];
-    }
 
     for (int i = 0; i < n; i++) {
-        if (fp[i][i] == 0) {
+        if (p[i][i] == 0) {
             for (int j = i + 1; j < n; j++) {
-                if (fp[j][i] != 0) {
-
-                    fh[i] = fp[i];
-                    fp[i] = fp[j];
-                    fp[j] = fh[i];
+                if (p[j][i] != 0) {
+                    fh[i] = p[i];
+                    p[i] = p[j];
+                    p[j] = fh[i];
                     break;
                 }
             }
         }
         
     }
-    Show_matr(fp, 5, 6);
-    return **fp;
 }
 
 // Метод Жордана-Гаусса в виде модуля, состоящего из множества функций (Шагов)
@@ -54,7 +46,8 @@ void Method(float** aop, unsigned n, unsigned m) {
     step1(aop);
     
     // Вывод итоговой матрицы
-    //Show_matr(lp, n, m);
+    cout << "Итоговая матрица:";
+    Show_matr(aop, n, m);
 }
 
 
@@ -92,14 +85,8 @@ int main()
     }
 
 
-    // Тестовый вывод матрицы
-    cout << "Изначальная матрица:";
-    Show_matr(aop, n, m);
-
-    step1(aop);
-
-    // Тест 1-ого шага
-    //Method(aop, *pn, m);
+    // Тест 
+    Method(aop, *pn, m);
 
 
     system("pause"); // Окончание программы
