@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -12,7 +13,7 @@ void Show_matr(float** p) {
     for (unsigned i = 0; i < n; i++) {
         cout << "\t" << "|";
         for (unsigned j = 0; j < m; j++) {
-            cout << p[i][j] << "\t" << "|";
+            cout << setw(12) << p[i][j] << "|";
         }
         cout << endl;
     }
@@ -21,7 +22,8 @@ void Show_matr(float** p) {
 
 
 
-// 1-ый шаг метода Жаргана-Гаусса
+// 1-ый шаг метода Жаргана-Гаусса 
+// Протестирован
 void step1(float** p, unsigned k) {
 
     float* fh[n];
@@ -44,15 +46,37 @@ void step1(float** p, unsigned k) {
     }
 }
 
+
 // 2-ой шаг метода Жаргана-Гаусса
 void step2(float** p, unsigned k) {
+
+    float z; // Пока тест...
     for (unsigned i = 0; i < n - 1; i++) {
-        for (unsigned j = 0; j < m - 1; j++) {
-            if (p[i][i] != 1) {
+        for (unsigned j = 0; j < m; j++) {
+            if ((p[i][i] != 1) & (i != k) & (j > k)) {
+                z = (p[i][j] * p[k][k] - p[i][k] * p[k][j]) / (p[k][k]);
+                p[i][j] = z;
             }
         }
     }
+}// 3-ий шаг метода Жаргана-Гаусса
+
+// 3-ий шаг метода Жаргана-Гаусса
+void step3(float** p, unsigned k) {
+    for (unsigned i = k + 1; i < n; i++) {
+        p[i][k] *= 0;
+    }
 }
+
+// 4-ый шаг метода Жаргана-Гаусса
+void step4(float** p, unsigned k) {
+    for (unsigned j = 0; j < k; j++) {
+        p[k][m - j] /= p[k][k];
+    }
+}
+
+                    
+                        
 
 
 
@@ -64,9 +88,11 @@ void Method(float** aop) {
 
 
     // Сообственно сам метод:
-    for (unsigned k = 0; k < 1; k++) {
+    for (unsigned k = 0; k < n; k++) {
         step1(aop, k);
         step2(aop, k);
+        step3(aop, k);
+        step4(aop, k);
     }
 
 
@@ -104,7 +130,7 @@ int main()
         // Не забудь поменять потом на свой массив
     float* aop[n];
     for (int i = 0; i < n; i++) {
-        aop[i] = tmat[i];
+        aop[i] = my_mat[i];
     }
 
 
