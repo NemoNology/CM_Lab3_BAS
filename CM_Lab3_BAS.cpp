@@ -23,7 +23,7 @@ void Show_matr(double** p) {
 }
 
 
-// 1-ый шаг метода Жаргана-Гаусса 
+// 1-ый шаг метода Жаргана-Гаусса - проверка на a[k][k] == 0
 // Протестировано...
 void step1(double** p, unsigned k) {
 
@@ -45,7 +45,7 @@ void step1(double** p, unsigned k) {
     }
 }
 
-// 2-ой шаг метода Жаргана-Гаусса
+// 2-ой шаг метода Жаргана-Гаусса - вычисление a[i][j], при i != k & j > k
 void step2(double** p, unsigned k) {
 
     for (unsigned i = k + 1; i < n; i++) {
@@ -54,14 +54,13 @@ void step2(double** p, unsigned k) {
                 p[i][j] = (p[i][j] * p[k][k] - p[i][k] * p[k][j]) / (p[k][k]);
                 //cout << "step2:\n" << "k: " << k + 1 << "\ti: " << i + 1 << "\tj: " << j + 1;
                 //Show_matr(p);
-                
             }
         }
         break;
     }
 }
 
-// 3-ий шаг метода Жаргана-Гаусса
+// 3-ий шаг метода Жаргана-Гаусса - обнуление
 // Протестировано...
 void step3(double** p, unsigned k) {
 
@@ -70,18 +69,21 @@ void step3(double** p, unsigned k) {
     for (unsigned i = 0; i < n; i++) {
         p[i][k] = 0;
         p[k][k] = x;
-        cout << "step3:\n" << "k: " << k + 1 << "\ti: " << i + 1 << "\tj: " << k + 1;
-        Show_matr(p);
+        //cout << "step3:\n" << "k: " << k + 1 << "\ti: " << i + 1 << "\tj: " << k + 1;
+        //Show_matr(p);
     }
 }
 
-// 4-ый шаг метода Жаргана-Гаусса
+// 4-ый шаг метода Жаргана-Гаусса - Вычисление a[k][j]
 void step4(double** p, unsigned k) {
 
+    p[k][m - 1] /= p[k][k];
+    p[k][k] = 1;
+
     // unsigned newj = m - 1; // Т.к. цикл for не воспроизводится по убыванию, то используем while...
-    for (unsigned z = m - 1; z >= m - (k + 1); z--) {
-        p[k][z] /= p[k][k];
-    }
+    //for (unsigned j = m - 1; j >= m - (k + 1); j--) {
+        //p[k][m - 1] /= p[k][k];
+    //}
     
 }
 
